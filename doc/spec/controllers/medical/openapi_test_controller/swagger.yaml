@@ -1,0 +1,65 @@
+---
+openapi: 3.0.3
+info:
+  title: API Documentation
+  version: 1.0.0
+servers: []
+paths:
+  "/openapi_test":
+    get:
+      summary: index
+      tags:
+      - OpenapiTest
+      responses:
+        '200':
+          description: returns ok status
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: string
+                required:
+                - ok
+    post:
+      summary: create
+      tags:
+      - OpenapiTest
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                type:
+                  type: string
+                value:
+                  type: string
+                something_else:
+                  type: string
+                extra:
+                  type: string
+      responses:
+        '200':
+          description: second test
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: string
+                  extra:
+                    type: boolean
+        '422':
+          description: returns unprocessable_entity status
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
