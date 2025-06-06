@@ -1,4 +1,10 @@
 [
-  "label": "test path",
-  "path": "/doc/spec/controllers/medical/openapi_test_controller/swagger.yaml"
+  {
+    "label": "test outside path",
+    "path": "/doc/spec/controllers/medical/openapi_test_controller/swagger.yaml"
+  },
+  {
+    "label": "test inside path",
+    "path": "/docs/spec/controllers/medical/openapi_test_controller/swagger.yaml"
+  }
 ]
