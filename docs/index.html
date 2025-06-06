@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>API Docs</title>
+  <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist/swagger-ui.css">
+  <style>
+    body { margin: 20px; font-family: sans-serif; }
+    #selector { margin-bottom: 20px; }
+  </style>
+</head>
+<body>
+  <h1>API Documentation</h1>
+
+  <div id="selector">
+    <label for="apiSelect">Choose API:</label>
+    <select id="apiSelect">
+      <option value="">-- Select an API --</option>
+    </select>
+  </div>
+
+  <div id="swagger-ui"></div>
+
+  <script src="https://unpkg.com/swagger-ui-dist/swagger-ui-bundle.js"></script>
+  <script>
+    const apiSelect = document.getElementById('apiSelect');
+    const ui = SwaggerUIBundle({ dom_id: '#swagger-ui' });
+
+    fetch('./api-list.json')
+      .then(res => res.json())
+      .then(apiList => {
+        apiList.forEach(api => {
+          const opt = document.createElement('option');
+          opt.value = api.path;
+          opt.textContent = api.label;
+          apiSelect.appendChild(opt);
+        });
+
+        // Auto-load if ?url= is used
+        const params = new URLSearchParams(window.location.search);
+        const url = params.get('url');
+        if (url) {
+          apiSelect.value = url;
+          ui.specActions.updateUrl(url);
+          ui.specActions.download();
+        }
+      });
+
+    apiSelect.addEventListener('change', () => {
+      const selected = apiSelect.value;
+      if (selected) {
+        ui.specActions.updateUrl(selected);
+        ui.specActions.download();
+        const url = new URL(window.location);
+        url.searchParams.set('url', selected);
+        window.location = url;
+      }
+    });
+  </script>
+</body>
+</html>
